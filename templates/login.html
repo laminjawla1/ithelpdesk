@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.jpg' %}" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="http://infiniteiotdevices.com/images/logo.png"
+      rel="icon"
+      sizes="16x16"
+      type="image/gif"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/folded-login-form.css' %}"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="signIn" style="color: yellow; font-style: Arial">
+        WELCOME TO THE IT HELP-DESK
+      </div>
+      <div class="signIn">Click Here to Login In</div>
+      <div class="fold">
+        <form method="post" actions="login">
+          {% csrf_token %}
+          <input type="text" name="username" placeholder="Username" />
+          <input type="password" name="password" placeholder="Password" />
+          {% for message in messages %}
+          <h5 style="color: red">{{message}}</h5>
+          {% endfor %}
+          <input style="color: yellow" type="submit" name="" value="Login" />
+          <br />
+          <br />
+          <br />
+          <h5 style="color: yellow">If You Don't Have an Account</h5>
+          <h5 style="color: yellow">Sign Up By Contacting The IT Department</h5>
+          <div class="col-md-12"></div>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".signIn").click(function () {
+          $(".fold").toggleClass("active");
+        });
+      });
+    </script>
+  </body>
+</html>

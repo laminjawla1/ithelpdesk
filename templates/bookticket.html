@@ -1,0 +1,448 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+    <!-- site metas -->
+    <title>Ticket Booking</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.jpg' %}"/>
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- Responsive-->
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+    <!-- fevicon -->
+    <link
+      rel="icon"
+      href="{% static 'images/fevicon.png' %}"
+      type="image/gif"
+    />
+    <!-- Scrollbar Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/jquery.mCustomScrollbar.min.css' %}"
+    />
+    <!-- Tweaks for older IEs-->
+    <link
+      rel="stylesheet"
+      href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+      media="screen"
+    />
+    <!-- my style -->
+    <link rel="stylesheet" href="./s.css" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script
+    ><![endif]-->
+  </head>
+  <!-- body -->
+  <body class="main-layout inner_posituong contact_page">
+    <!-- loader  -->
+    {% comment %} <div class="loader_bg">
+      <div class="loader">
+        <img src="{% static 'images/loading.gif' %}" alt="#" />
+      </div>
+    </div> {% endcomment %}
+    <!-- end loader -->
+    <!-- header -->
+    <header>
+      <!-- header inner -->
+      <div class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+              <div class="full">
+                <div class="center-desk">
+                  <div class="logo">
+                    <a href="{% url 'index' %}"
+                      ><img
+                        src="{% static 'images/logo.jpg' %}"
+                        width="150"
+                        height="140"
+                        alt="#"
+                    /></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+              <nav class="navigation navbar navbar-expand-md navbar-dark">
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#navbarsExample04"
+                  aria-controls="navbarsExample04"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExample04">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'services' %}"
+                        >Service</a
+                      >
+                    </li>
+                    <li class="nav-item active" class="nav-item">
+                      <a class="nav-link" href="{% url 'bookticket' %}"
+                        >Book A Ticket</a
+                      >
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'feedback' %}"
+                        >Feedback</a
+                      >
+                    </li>
+                    <li class="nav-item d_none">
+                      <a class="nav-link" href="{% url 'search' %}"
+                        ><i class="fa fa-search" aria-hidden="true"></i
+                      ></a>
+                    </li>
+                    </li>
+                      {% if user.is_authenticated %}
+                      <li style="color: cyan">Hello, {{user.first_name}}</li>
+                      <li class="nav-item d_none">
+                          <a style="color: red" class="nav-link" href="{% url 'logout' %}">Logout</a>
+                      </li>
+                      {% else %}
+                    <li class="nav-item d_none">
+                      <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- end header inner -->
+    <!-- end header -->
+    <!--  contact -->
+    <div class="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="titlepage">
+              <h2>Ticket Booking</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <form
+              method="POST"
+              action="{% url 'submit_ticket' %}"
+              id="request"
+              class="main_form"
+            >
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 style="color: white" id="zone">SELECT YOUR ZONE</h3>
+                  <select
+                    placeholder="Choose your zone"
+                    class="contactus bg-dark"
+                    type="zone"
+                    name="zone"
+                    id="zone" 
+                    required>
+                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="Bansang" required>Bansang</option>
+                    <option value="Basse" required>Basse</option>
+                    <option value="Brikama" required>Brikama</option>
+                    <option value="Brusibi" required>Brusibi</option>
+                    <option value="Farafenni" required>Farafenni</option>
+                    <option value="Soma" required>Soma</option>
+                    <option value="Tippagarage" required>Tippagrage</option>
+                    <option value="Tabokoto" required>Tabokoto</option>
+                    <option value="Westfield" required>Westfield</option>
+                  </select>
+                  <h3 style="color: white" id="branch">SELECT YOUR BRANCH</h3>
+                  <select
+                    placeholder="Choose your zone"
+                    class="contactus bg-dark"
+                    type="branch"
+                    name="branch"
+                    id="branch"
+                    required>
+                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="Abuko" required>Abuko</option>
+                    <option value="Albreda" required>Albreda</option>
+                    <option value="Aljamdu" required>Aljamdu</option>
+                    <option value="Allunhari" required>Allunhari</option>
+                    <option value="Allunhari Abdou" required>Allunhari Abdou</option>
+                    <option value="Amdalai" required>Amdalai</option>
+                    <option value="Badarri" required>Badarri</option>
+                    <option value="Baja Kunda" required>Baja Kunda</option>
+                    <option value="Bakadaji" required>Bakadaji</option>
+                    <option value="Bakau" required>Bakau</option>
+                    <option value="Bakindick Mandinka" required>Bakindick Mandinka</option>
+                    <option value="Bambo" required>Bambo</option>
+                    <option value="Banjul" required>Banjul</option>
+                    <option value="Banjulunding" required>Banjulunding</option>
+                    <option value="Banni" required>Banni</option>
+                    <option value="Bansang" required>Bansang</option>
+                    <option value="Bantango Koto" required>Bantango Koto</option>
+                    <option value="Bantanto" required>Bantanto</option>
+                    <option value="Bantunding" required>Bantunding</option>
+                    <option value="Banyakang" required>Banyakang</option>
+                    <option value="Barajally" required>Barajally</option>
+                    <option value="Barrow Kunda" required>Barrow Kunda</option>
+                    <option value="Barry Nabeh" required>Barry Nabeh</option>
+                    <option value="Basse" required>Basse</option>
+                    <option value="Basse Nding" required>Basse Nding</option>
+                    <option value="Batokunku" required>Batokunku</option>
+                    <option value="Berefet" required>Berefet</option>
+                    <option value="Besang Dugu" required>Besang Dugu</option>
+                    <option value="Bohum Kunda" required>Bohum Kunda</option>
+                    <option value="Boro Dampha Kunda" required>Boro Dampha Kunda</option>
+                    <option value="Boro Kanda Kassy" required>Boro Kanda Kassy</option>
+                    <option value="Boro Modi Bane" required>Boro Modi Bane</option>
+                    <option value="Brifu" required>Brifu</option>
+                    <option value="Brikama" required>Brikama</option>
+                    <option value="Brikama Ba" required>Brikama Ba</option>
+                    <option value="Brufut" required>Brufut</option>
+                    <option value="Bulok" required>Bulok</option>
+                    <option value="Busumbala" required>Busumbala</option>
+                    <option value="Busura Alieu" required>Busura Alieu</option>
+                    <option value="Bwiam" required>Bwiam</option>
+                    <option value="Chamoi" required>Chamoi</option>
+                    <option value="Chamoi Bunda" required>Chamoi Bunda</option>
+                    <option value="Demba Kunda" required>Demba Kunda</option>
+                    <option value="Diabugu" required>Diabugu</option>
+                    <option value="Dumbutu" required>Dumbutu</option>
+                    <option value="Dobo" required>Dobo</option>
+                    <option value="Daru Rilwan" required>Daru Rilwan</option>
+                    <option value="Essau" required>Essau</option>
+                    <option value="Faraba Banta" required>Faraba Banta</option>
+                    <option value="Farafenni" required>Farafenni</option>
+                    <option value="Farato" required>Farato</option>
+                    <option value="Fatoto" required>Fatoto</option>
+                    <option value="Fattatenda" required>Fattatenda</option>
+                    <option value="Gambissara" required>Gambissara</option>
+                    <option value="Garowol" required>Garowol</option>
+                    <option value="Genieri" required>Genieri</option>
+                    <option value="Ghana Town" required>Ghana Town</option>
+                    <option value="Gimara" required>Gimara</option>
+                    <option value="Gunjur" required>Gunjur</option>
+                    <option value="Janjanbureh" required>Janjanbureh</option>
+                    <option value="Jufureh" required>Jufureh</option>
+                    <option value="Kaiai" required>Kaiai</option>
+                    <option value="Kiang" required>Kiang</option>
+                    <option value="Kanilai" required>Kanilai</option>
+                    <option value="Kartung" required>Kartung</option>
+                    <option value="Kalagi" required>Kalagi</option>
+                    <option value="Karantaba Tenda" required>Karantaba Tenda</option>
+                    <option value="Kuntaur" required>Kuntaur</option>
+                    <option value="Kalagi" required>Kalagi</option>
+                    <option value="Karantaba Tenda" required>Karantaba Tenda</option>
+                    <option value="Kerewan" required>Kerewan</option>
+                    <option value="Kololi" required>Kololi</option>
+                    <option value="Kuntaur" required>Kuntaur</option>
+                    <option value="Lamin" required>Lamin</option>
+                    <option value="Latrikunda" required>Latrikunda</option>
+                    <option value="Mansa Konko" required>Mansa Konko</option>
+                    <option value="Nema Kunku" required>Nema Kunku</option>
+                    <option value="Pakali Ba" required>Pakali Ba</option>
+                    <option value="Pakali Ding" required>Pakali Ding</option>
+                    <option value="Sankandi" required>Sankandi</option>
+                    <option value="Serekunda" required>Serekunda</option>
+                    <option value="Suduwol" required>Suduwol</option>
+                    <option value="Sutukoba" required>Sutukoba</option>
+                    <option value="Yundum" required>Yundum</option>
+                    <option value="Soma" required>Soma</option>
+                    <option value="Sukuta" required>Sukuta</option>
+                    <option value="Tabokoto" required>Tabokoto</option>
+                    <option value="Tanji" required>Tanji</option>
+                    <option value="Tallingding" required>Tallingding</option>
+                    <option value="Other" required>Other</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <h3 style="color: white" id="issue">SELECT AN ISSUE</h3>
+                  <select
+                    class="contactus bg-dark"
+                    type="issue"
+                    name="issue"
+                    id="issue"
+                    required>
+                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="email">Email</option>
+                    <option value="password">Password</option>
+                    <option value="activation">Activation</option>
+                    <option value="Windows Won’t Boot">Windows Won’t Boot</option>
+                    <option value="The Screen is Frozen">The Screen is Frozen</option>
+                    <option value="Computer is Slow">Computer is Slow</option>
+                    <option value="Keyboard Issues">Keyboard Issues</option>
+                    <option value="Mouse">Mouse</option>
+                    <option value="Strange Noises">Strange Noises</option>
+                    <option value="Slow Internet">Slow Internet</option>
+                    <option value="Overheating">Overheating</option>
+                    <option value="Dropped Internet Connections">Dropped Internet Connections</option>
+                    <option value="Quick Book">Quick Book</option>
+                    <option value="You’re Seeing a BSOD (Blue Screen of Death)">You’re Seeing a BSOD (Blue Screen of Death)</option>
+                    <option value="terminal_replacement">
+                      Terminal Replacement
+                    </option>
+                    <option value="terminal_installation">
+                      Terminal Installation
+                    </option>
+                    <option value="The Computer Won’t Start">
+                      The Computer Won’t Start
+                    </option>
+                    <option value="computer_restarts_itself">
+                      Computer Restarts Itself
+                    </option>
+                    <option value="Abnormally Functioning Operating System or Software">
+                      Abnormally Functioning Operating System or Software
+                    </option>
+                    <option value="The Screen is Blank">
+                      The Screen is Blank
+                    </option>
+                    <option value="undefine">Undefine Behavior</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-12">
+                  <h3 style="color: white" id="issue">SELECT THE DATE THE PROBLEM OCCURRED</h3>
+                  <input
+                    class="contactus bg-dark"
+                    placeholder=""
+                    type="date"
+                    name="date"
+                    id="date"
+                    required
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    class="contactus bg-dark"
+                    placeholder="Personal / CUG Number"
+                    type="number"
+                    name="phone"
+                    id="phone"
+                    required
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    class="contactus bg-dark"
+                    placeholder="Enter Your Anydesk Address Here"
+                    type="number"
+                    name="anydesk"
+                    id="anydesk"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <textarea
+                    class="textarea bg-dark"
+                    placeholder="Give a description to help us understand"
+                    type="description"
+                    name="description"
+                    id="description"
+                    required
+                  ></textarea>
+                </div>
+                <div class="col-md-12">
+                  <h3 style="color: white">
+                    WOULD'NT YOU MIND SUBMITTING A PHOTO OF THE ISSUE?
+                  </h3>
+                  <input
+                    class="contactus bg-dark"
+                    placeholder="Image"
+                    type="file"
+                    name="image"
+                    id="image"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <button class="send_btn">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end contact -->
+      <!--  footer -->
+      <footer>
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <img class="logo1" src="{% static 'images/logo.jpg' %}" width="58" height="42" alt="#"/>
+                     <ul class="social_icon">
+                        <li><a href="https://www.facebook.com/YONNAForex"><i class="fa fa-facebook" target="_blank" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <h3>About Us</h3>
+                     <ul class="about_us">
+                        <li>Demanding, but definitely doable<br>Stressful but educational<br>A focused department, with broadly applicable skills<br>Yonna Forex Bureau - IT Department, is the quintessential.</li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <h3>Contact Us</h3>
+                     <ul class="conta">
+                        <li>+2209689635<br>+2205039744<br>+2209463635<br>Email:<br>techsupport@yonnaforexbureau.com</li>
+                     </ul>
+                  </div>
+                  <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                     <form class="bottom_form">
+                        <h3>Newsletter</h3>
+                        <input class="enter" placeholder="Enter your email" type="text" name="Enter your email">
+                        <button class="sub_btn">subscribe</button>
+                     </form>
+                  </div>
+               </div>
+            </div>
+            <div class="copyright">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <p>Developed By Lamin Jawla</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!-- end footer -->
+    <!-- Javascript files-->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+    <!-- sidebar -->
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+  </body>
+</html>
