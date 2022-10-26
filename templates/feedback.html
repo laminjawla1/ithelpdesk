@@ -69,7 +69,7 @@
                   <div class="logo">
                     <a href="{% url 'index' %}"
                       ><img
-                        src="{% static 'images/logo.jpg' %}"
+                        src="{% static 'images/logo2.png' %}"
                         width="150"
                         height="140"
                         alt="#"
@@ -162,7 +162,7 @@
                 <div class="col-md-12">
                   <input
                     class="contactus"
-                    placeholder="Name"
+                    placeholder="Name *"
                     type="text"
                     id="name"
                     name="name"
@@ -182,7 +182,7 @@
                 <div class="col-md-12">
                   <input
                     class="contactus"
-                    placeholder="Phone Number"
+                    placeholder="Phone Number *"
                     type="number"
                     id="phone"
                     name="phone"
@@ -192,13 +192,16 @@
                 <div class="col-md-12">
                   <textarea
                     class="textarea"
-                    placeholder="Message"
+                    placeholder="Message *"
                     type="text"
                     id="message"
                     name="message"
                     required
                   ></textarea>
                 </div>
+                {% for message in messages %}
+                  <h5 class="titlepage" style="color: red">{{message}}</h5>
+                {% endfor %}
                 <div class="col-md-12">
                   <button class="send_btn">Send</button>
                 </div>

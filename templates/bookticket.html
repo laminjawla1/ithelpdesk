@@ -70,7 +70,7 @@
                   <div class="logo">
                     <a href="{% url 'index' %}"
                       ><img
-                        src="{% static 'images/logo.jpg' %}"
+                        src="{% static 'images/logo2.png' %}"
                         width="150"
                         height="140"
                         alt="#"
@@ -153,6 +153,7 @@
         </div>
         <div class="row">
           <div class="col-md-10 offset-md-1">
+            <h3 class="titlepage" style="color: white" id="zone">All fields marked <span style="color: red">*</span> are mandatory</h3>
             <form
               method="POST"
               action="{% url 'submit_ticket' %}"
@@ -162,7 +163,7 @@
               {% csrf_token %}
               <div class="row">
                 <div class="col-md-12">
-                  <h3 style="color: white" id="zone">SELECT YOUR ZONE</h3>
+                  <h3 style="color: white" id="zone">SELECT YOUR ZONE <span style="color: red">*</span></h3>
                   <select
                     placeholder="Choose your zone"
                     class="contactus bg-dark"
@@ -170,7 +171,7 @@
                     name="zone"
                     id="zone" 
                     required>
-                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="" selected="selected" hidden="hidden">Select</option>
                     <option value="Bansang" required>Bansang</option>
                     <option value="Basse" required>Basse</option>
                     <option value="Brikama" required>Brikama</option>
@@ -181,7 +182,7 @@
                     <option value="Tabokoto" required>Tabokoto</option>
                     <option value="Westfield" required>Westfield</option>
                   </select>
-                  <h3 style="color: white" id="branch">SELECT YOUR BRANCH</h3>
+                  <h3 style="color: white" id="branch">SELECT YOUR BRANCH <span style="color: red">*</span></h3>
                   <select
                     placeholder="Choose your zone"
                     class="contactus bg-dark"
@@ -189,7 +190,7 @@
                     name="branch"
                     id="branch"
                     required>
-                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="" selected="selected" hidden="hidden">Select</option>
                     <option value="Abuko" required>Abuko</option>
                     <option value="Albreda" required>Albreda</option>
                     <option value="Aljamdu" required>Aljamdu</option>
@@ -265,6 +266,7 @@
                     <option value="Kuntaur" required>Kuntaur</option>
                     <option value="Lamin" required>Lamin</option>
                     <option value="Latrikunda" required>Latrikunda</option>
+                    <option value="Latrikunda German" required>Latrikunda German</option>
                     <option value="Mansa Konko" required>Mansa Konko</option>
                     <option value="Nema Kunku" required>Nema Kunku</option>
                     <option value="Pakali Ba" required>Pakali Ba</option>
@@ -283,14 +285,14 @@
                   </select>
                 </div>
                 <div class="col-md-12">
-                  <h3 style="color: white" id="issue">SELECT AN ISSUE</h3>
+                  <h3 style="color: white" id="issue">SELECT AN ISSUE <span style="color: red">*</span></h3>
                   <select
                     class="contactus bg-dark"
                     type="issue"
                     name="issue"
                     id="issue"
                     required>
-                    <option value="" selected="selected" hidden="hidden">Choose here</option>
+                    <option value="" selected="selected" hidden="hidden">Select</option>
                     <option value="email">Email</option>
                     <option value="password">Password</option>
                     <option value="activation">Activation</option>
@@ -328,7 +330,7 @@
                   </select>
                 </div>
                 <div class="col-md-12">
-                  <h3 style="color: white" id="issue">SELECT THE DATE THE PROBLEM OCCURRED</h3>
+                  <h3 style="color: white" id="issue">SELECT THE DATE THE PROBLEM OCCURRED <span style="color: red">*</span></h3>
                   <input
                     class="contactus bg-dark"
                     placeholder=""
@@ -341,7 +343,7 @@
                 <div class="col-md-12">
                   <input
                     class="contactus bg-dark"
-                    placeholder="Personal / CUG Number"
+                    placeholder="Personal / CUG Number *"
                     type="number"
                     name="phone"
                     id="phone"
@@ -360,7 +362,7 @@
                 <div class="col-md-12">
                   <textarea
                     class="textarea bg-dark"
-                    placeholder="Give a description to help us understand"
+                    placeholder="Give a description to help us understand *"
                     type="description"
                     name="description"
                     id="description"
@@ -379,6 +381,9 @@
                     id="image"
                   />
                 </div>
+                {% for message in messages %}
+                  <h5 class="titlepage" style="color: red">{{message}}</h5>
+                {% endfor %}
                 <div class="col-md-12">
                   <button class="send_btn">Submit</button>
                 </div>

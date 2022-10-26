@@ -30,7 +30,7 @@ class PageAdmin(admin.ModelAdmin):
     search_fields = ('name', 'phone', 'issue',
                      'category', 'status', 'cycle', 'date', 'time')
     list_filter = ['name', 'issue',
-                   'category', 'status', 'cycle', 'date']
+                   'category', 'status', 'cycle', 'assigned_to', 'date']
 
     fieldsets = (
         ('Meta Information', {

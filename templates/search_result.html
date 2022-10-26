@@ -68,7 +68,7 @@
                   <div class="logo">
                     <a href="{% url 'index' %}"
                       ><img
-                        src="{% static 'images/logo.jpg' %}"
+                        src="{% static 'images/logo2.png' %}"
                         width="150"
                         height="140"
                         alt="#"
@@ -146,7 +146,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="titlepage">
-                <h2 style="color: red">Query Result</h2>
+                <h2 style="color: white">Query Result</h2>
                 <br>
                 <div class="container text-center">
                   <div class="row">
@@ -171,13 +171,13 @@
                   {% for ticket in tickets %}
                     <div class="container text-center">
                       <div class="row">
-                        <div class="col" style="color: cyan">
+                        <div class="col" style="color: white">
                           {{forloop.counter}}. {{ticket.name}}
                         </div>
-                        <div class="col" style="color: red">
+                        <div class="col" style="color: white">
                           {{ticket.phone}}
                         </div>
-                        <div class="col" style="color: yellow">
+                        <div class="col" style="color: white">
                           {{ticket.issue}}
                         </div>
                         {% if ticket.cycle == 'Pending' %}
@@ -201,7 +201,7 @@
                             {{ticket.cycle}}
                           </div>
                           {% endif %}
-                          <div class="col" style="color: magenta">
+                          <div class="col" style="color: white">
                             {{ticket.date}}
                           </div>
                       </div>

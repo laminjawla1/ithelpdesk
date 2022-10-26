@@ -49,7 +49,7 @@
                      <div class="full">
                         <div class="center-desk">
                            <div class="logo">
-                              <a href="{% url 'index' %}"><img src="{% static 'images/logo.jpg' %}"width="150" height="140" alt="#" /></a>
+                              <a href="{% url 'index' %}"><img src="{% static 'images/logo2.png' %}"width="150" height="140" alt="#" /></a>
                            </div>
                         </div>
                      </div>
@@ -89,7 +89,7 @@
                                  <a class="nav-link" href="{% url 'login' %}">Login</a>
                               </li>
                               {% endif %}
-                              {% if user.is_superuser %}
+                              {% if user.is_staff %}
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="admin" target="_blank"><img src="{% static 'images/admin.png' %}" width='50' height='40' alt="#" /></a>
                               </li>
@@ -432,17 +432,20 @@
                      {% csrf_token %}
                   <div class="row">
                      <div class="col-md-12">
-                        <input class="contactus" placeholder="Name" type="text" id="name" name="name" required />
+                        <input class="contactus" placeholder="Name *" type="text" id="name" name="name" required />
                      </div>
                      <div class="col-md-12">
                         <input class="contactus" placeholder="Email" type="text" id="email" name="email" required />
                      </div>
                      <div class="col-md-12">
-                        <input class="contactus" placeholder="Phone Number" type="phone" id="phone" name="phone" required />
+                        <input class="contactus" placeholder="Phone Number *" type="phone" id="phone" name="phone" required />
                      </div>
                      <div class="col-md-12">
-                        <textarea class="textarea" placeholder="Message" type="text" id="message" Name="message" required></textarea>
+                        <textarea class="textarea" placeholder="Message *" type="text" id="message" Name="message" required></textarea>
                      </div>
+                     {% for message in messages %}
+                        <h5 style="color: red">{{message}}</h5>
+                     {% endfor %}
                      <div class="col-md-12">
                         <button class="send_btn">Send</button>
                      </div>

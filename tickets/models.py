@@ -66,13 +66,13 @@ class Expert(models.Model):
 
 
 class Ticket(models.Model):
-    zone = models.CharField(max_length=50)
-    branch = models.CharField(max_length=50)
-    issue = models.CharField(max_length=50, blank=False, null=False)
+    zone = models.CharField(max_length=100)
+    branch = models.CharField(max_length=100)
+    issue = models.CharField(max_length=100, blank=False, null=False)
     status = models.CharField(
-        max_length=50, blank=True, choices=status_list, default=status_list[0][0])
+        max_length=100, blank=True, choices=status_list, default=status_list[0][0])
     date = models.DateField(null=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     phone = models.CharField(max_length=12, blank=False, null=False)
     image = models.ImageField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
@@ -80,9 +80,9 @@ class Ticket(models.Model):
     assigned_to = models.ManyToManyField(Expert)
     time = models.TimeField(default=time.strftime("%H:%M:%S"))
     cycle = models.CharField(
-        max_length=50, choices=cycle_list, default=cycle_list[0][0])  # admin
+        max_length=100, choices=cycle_list, default=cycle_list[0][0])  # admin
     category = models.CharField(
-        max_length=50, choices=category_list, default=category_list[0][0])  # admin
+        max_length=100, choices=category_list, default=category_list[0][0])  # admin
     verification = models.BooleanField(blank=True, null=True)  # admin
     date_closed = models.DateTimeField(null=True, blank=True)  # admin
     documentation = models.TextField(blank=True)

@@ -1,66 +1,60 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from tickets.models import Expert, Ticket
 from feedback.models import Feedback
+from django.contrib import messages
 import time
 # Create your views here.
 
 
-# def get_pending_tickets(tickets):
-#     t = 0
-#     for ticket in tickets:
-#         if ticket.cycle == "Pending":
-#             t += 1
-#     return f"{t:,}"
+def get_pending_tickets(tickets):
+    t = 0
+    for ticket in tickets:
+        if ticket.cycle == "Pending":
+            t += 1
+    return f"{t:,}"
 
 
-# def get_open_tickets(tickets):
-#     t = 0
-#     for ticket in tickets:
-#         if ticket.cycle == "Open":
-#             t += 1
-#     return f"{t:,}"
+def get_open_tickets(tickets):
+    t = 0
+    for ticket in tickets:
+        if ticket.cycle == "Open":
+            t += 1
+    return f"{t:,}"
 
 
-# def get_progress_tickets(tickets):
-#     t = 0
-#     for ticket in tickets:
-#         if ticket.cycle == "Progress":
-#             t += 1
-#     return f"{t:,}"
+def get_progress_tickets(tickets):
+    t = 0
+    for ticket in tickets:
+        if ticket.cycle == "Progress":
+            t += 1
+    return f"{t:,}"
 
 
-# def get_closed_tickets(tickets):
-#     t = 0
-#     for ticket in tickets:
-#         if ticket.cycle == "Closed":
-#             t += 1
-#     return f"{t:,}"
+def get_closed_tickets(tickets):
+    t = 0
+    for ticket in tickets:
+        if ticket.cycle == "Closed":
+            t += 1
+    return f"{t:,}"
 
 
 @login_required
 def index(request):
-    # tickets = Ticket.objects.all()
-    # tickets_booked = len(tickets)
-    # tickets_pending = get_pending_tickets(tickets)
-    # tickets_open = get_open_tickets(tickets)
-    # tickets_progress = get_progress_tickets(tickets)
-    # tickets_closed = get_closed_tickets(tickets)
-    # print(f"b-{tickets_booked} p-{tickets_pending} o-{tickets_open} pr-{tickets_progress} c-{tickets_closed}")
+    tickets = Ticket.objects.all()
+    tickets_booked = len(tickets)
+    tickets_pending = get_pending_tickets(tickets)
+    tickets_open = get_open_tickets(tickets)
+    tickets_progress = get_progress_tickets(tickets)
+    tickets_closed = get_closed_tickets(tickets)
+
     items = {
-        "tickets_booked": f"{len(Ticket.objects.all()):,}",
-        "tickets_pending": f"{len(Ticket.objects.filter(name__startswith='Pending')):,}",
-        "tickets_open": f"{len(Ticket.objects.filter(name__startswith='Open')):,}",
-        "tickets_progress": f"{len(Ticket.objects.filter(name__startswith='Progress')):,}",
-        "tickets_closed": f"{len(Ticket.objects.filter(name__startswith='Closed')):,}",
+        "tickets_booked": tickets_booked,
+        "tickets_pending": tickets_pending,
+        "tickets_open": tickets_open,
+        "tickets_progress": tickets_progress,
+        "tickets_closed": tickets_closed
     }
-    # items = {
-    #     "tickets_booked": tickets_booked,
-    #     "tickets_pending": tickets_pending,
-    #     "tickets_open": tickets_open,
-    #     "tickets_progress": tickets_progress,
-    #     "tickets_closed": tickets_closed
-    # }
     experts = Expert.objects.all()
     return render(request, 'index.html', {"items": items, "experts": experts})
 
@@ -89,8 +83,17 @@ def feedback(request):
 def submit_feedback(request):
     if request.method == 'POST':
         name = request.POST['name']
+        if len(str(name)) > 50:
+            messages.info(request, "Name too long")
+            return redirect("feedback")
         email = request.POST['email']
+        if len(str(email)) > 100:
+            messages.info(request, "Invalid Email")
+            return redirect("feedback")
         phone = request.POST['phone']
+        if len(str(phone)) > 12:
+            messages.info(request, "Invalid Phone Number")
+            return redirect("feedback")
         message = request.POST['message']
         _time = time.strftime("%H:%M:%S")
 
@@ -109,7 +112,13 @@ def submit_ticket(request):
         date = request.POST['date']
         name = request.user
         phone = request.POST['phone']
+        if len(phone) > 12:
+            messages.info(request, "Invalid Phone Number")
+            return redirect("bookticket")
         anydesk = request.POST['anydesk']
+        if len(anydesk) > 9:
+            messages.info(request, "Invalid Anydesk Address")
+            return redirect("bookticket")
         description = request.POST['description']
         image = request.POST['image']
         _time = time.strftime("%H:%M:%S")

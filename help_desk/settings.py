@@ -160,6 +160,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SESSION_EXPIRE_SECONDS = 600
+SESSION_EXPIRE_SECONDS = 1200
 
 django_heroku.settings(locals())
