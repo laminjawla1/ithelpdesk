@@ -9,11 +9,11 @@ def export_tickets(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="tickets.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Name', 'Phone', 'Issue',
-                    'Category', 'Status', 'Cycle', 'Assigned To', 'Date', 'Time'])
+    writer.writerow(['Full Name', 'User Name', 'Phone', 'Issue',
+                    'Category', 'Status', 'Cycle', 'Date', 'Time'])
     tickets = queryset.values_list(
-        'name', 'phone', 'issue',
-        'category', 'status', 'cycle', 'assigned_to', 'date', 'time')
+        'submitter_name', 'username', 'phone', 'issue',
+        'category', 'status', 'cycle', 'date', 'time')
     for ticket in tickets:
         writer.writerow(ticket)
     return response
@@ -23,19 +23,19 @@ export_tickets.short_description = 'Export as csv'
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'issue',
+    list_display = ('submitter_name', 'username', 'phone', 'issue',
                     'category', 'status', 'cycle', 'date', 'time')
-    ordering = ('name', 'phone', 'issue',
+    ordering = ('submitter_name', 'username', 'phone', 'issue',
                 'category', 'status', 'cycle', 'date', 'time')
-    search_fields = ('name', 'phone', 'issue',
+    search_fields = ('submitter_name', 'username', 'phone', 'issue',
                      'category', 'status', 'cycle', 'date', 'time')
-    list_filter = ['name', 'issue',
+    list_filter = ['submitter_name', 'username', 'issue',
                    'category', 'status', 'cycle', 'assigned_to', 'date']
 
     fieldsets = (
         ('Meta Information', {
             'classes': ('collapse',),
-            'fields': ('name', 'issue', 'description', 'date', 'time')
+            'fields': ('submitter_name', 'username', 'issue', 'description', 'date', 'time')
         }),
         ('Contact Information', {
             'classes': ('collapse',),

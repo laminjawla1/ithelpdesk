@@ -8,7 +8,7 @@ class Feedback(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=12)
     message = models.TextField()
-    date = models.DateField(auto_now_add=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
     time = models.TimeField(default=time.strftime("%H:%M:%S"))
 
     def __str__(self) -> str:

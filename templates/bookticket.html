@@ -52,11 +52,11 @@
   <!-- body -->
   <body class="main-layout inner_posituong contact_page">
     <!-- loader  -->
-    {% comment %} <div class="loader_bg">
+    <div class="loader_bg">
       <div class="loader">
         <img src="{% static 'images/loading.gif' %}" alt="#" />
       </div>
-    </div> {% endcomment %}
+    </div>
     <!-- end loader -->
     <!-- header -->
     <header>
@@ -344,7 +344,7 @@
                   <input
                     class="contactus bg-dark"
                     placeholder="Personal / CUG Number *"
-                    type="number"
+                    type="text"
                     name="phone"
                     id="phone"
                     required
@@ -354,7 +354,7 @@
                   <input
                     class="contactus bg-dark"
                     placeholder="Enter Your Anydesk Address Here"
-                    type="number"
+                    type="text"
                     name="anydesk"
                     id="anydesk"
                   />

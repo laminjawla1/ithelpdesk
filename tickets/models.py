@@ -1,8 +1,3 @@
-from distutils.command.upload import upload
-from email.policy import default
-from pyexpat import model
-from random import choices
-from django.contrib.auth.models import User
 from django.db import models
 import time
 
@@ -45,7 +40,7 @@ class Specialization(models.Model):
 
 class Expert(models.Model):
     image = models.ImageField(
-        upload_to='pics/%y/%m/%d', null=True, blank=True)
+        upload_to='expert_pics/', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     phone = models.CharField(max_length=12, null=True, blank=True)
@@ -72,11 +67,13 @@ class Ticket(models.Model):
     status = models.CharField(
         max_length=100, blank=True, choices=status_list, default=status_list[0][0])
     date = models.DateField(null=True)
-    name = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    submitter_name = models.CharField(max_length=120, blank=True, null=True)
     phone = models.CharField(max_length=12, blank=False, null=False)
-    image = models.ImageField(blank=True, null=True)
+    image = models.FileField(
+        upload_to='ticket_pics', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
-    anydesk = models.IntegerField(null=True, blank=True)
+    anydesk = models.CharField(max_length=9, blank=True, null=True)
     assigned_to = models.ManyToManyField(Expert)
     time = models.TimeField(default=time.strftime("%H:%M:%S"))
     cycle = models.CharField(
@@ -88,4 +85,4 @@ class Ticket(models.Model):
     documentation = models.TextField(blank=True)
 
     def __str__(self):
-        return self.name
+        return self.username

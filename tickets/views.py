@@ -4,6 +4,7 @@ from tickets.models import Expert, Ticket
 from feedback.models import Feedback
 from django.contrib import messages
 import time
+from .validate import validate_anydesk, validate_email, validate_phone, validate_name
 # Create your views here.
 
 
@@ -82,25 +83,36 @@ def feedback(request):
 @login_required
 def submit_feedback(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        if len(str(name)) > 50:
-            messages.info(request, "Name too long")
+        name = validate_name(str(request.POST['name']))
+        if name:
+            name = name.group(1)
+        else:
+            messages.info(request, "Invalid Name")
             return redirect("feedback")
-        email = request.POST['email']
-        if len(str(email)) > 100:
+
+        email =validate_email(str(request.POST['email']))
+        if email:
+            email = email.group(1)
+        else:
             messages.info(request, "Invalid Email")
             return redirect("feedback")
-        phone = request.POST['phone']
-        if len(str(phone)) > 12:
+
+        phone = validate_phone(str(request.POST['phone']))
+        if phone:
+            phone = phone.group(1)
+        else:
             messages.info(request, "Invalid Phone Number")
             return redirect("feedback")
+
         message = request.POST['message']
         _time = time.strftime("%H:%M:%S")
 
         feed = Feedback(name=name, email=email, phone=phone,
                         message=message, time=_time)
         feed.save()
-    return render(request, 'submit_feedback.html')
+        return render(request, 'submit_feedback.html')
+    else:
+        return render(request, 'index.html')
 
 
 @login_required
@@ -110,23 +122,32 @@ def submit_ticket(request):
         branch = request.POST['branch']
         issue = request.POST['issue']
         date = request.POST['date']
-        name = request.user
-        phone = request.POST['phone']
-        if len(phone) > 12:
+        username = request.user
+        submitter_name = request.user.get_full_name()
+        phone = validate_phone(str(request.POST['phone']))
+        if phone:
+            phone = phone.group(1)
+        else:
             messages.info(request, "Invalid Phone Number")
             return redirect("bookticket")
-        anydesk = request.POST['anydesk']
-        if len(anydesk) > 9:
+
+        anydesk = validate_anydesk(request.POST['anydesk'])
+        if anydesk:
+            anydesk = anydesk.group(1)
+        else:
             messages.info(request, "Invalid Anydesk Address")
             return redirect("bookticket")
+
         description = request.POST['description']
         image = request.POST['image']
         _time = time.strftime("%H:%M:%S")
         ticket = Ticket(zone=zone, branch=branch, issue=issue, date=date,
-                        name=name, phone=phone, anydesk=anydesk, description=description, image=image, time=_time)
+                        username=username, submitter_name=submitter_name, phone=phone, anydesk=anydesk, description=description, image=image, time=_time)
 
         ticket.save()
-    return render(request, 'submit_ticket.html')
+        return render(request, 'submit_ticket.html')
+    else:
+        return render(request, 'index.html')
 
 
 @login_required
@@ -136,5 +157,5 @@ def search(request):
 
 @login_required
 def search_result(request):
-    tickets = Ticket.objects.filter(name__startswith=str(request.user))
+    tickets = Ticket.objects.filter(username__startswith=str(request.user))
     return render(request, "search_result.html", {"tickets": tickets})
