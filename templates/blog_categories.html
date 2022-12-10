@@ -1,0 +1,28 @@
+{% extends 'blog_base.html' %} 
+{% block content %}
+{% if user.is_authenticated%} 
+  {% if blog_category %}
+    <h1 style="color: purple">{{ cat|upper }}</h1>
+
+    <ul>
+    {% for post in blog_category %}
+      <li>
+        <a href="{% url 'article_detail' post.pk %}">{{post.title}}</a> -
+        {{post.author.first_name}} {{post.author.last_name}} - 
+        {% if user.is_staff%}
+        <small>
+          <a style="color: green" href="{% url 'edit_post' post.pk %}">(Edit)</a>
+          <a style="color: red" href="{% url 'delete_post' post.pk %}">(Delete)</a>
+        </small>
+        {% endif %}
+        <br />
+        {{post.body|slice:":50"| safe}}
+      </li>
+    {% endfor %}
+    </ul>
+{% else %}
+<h3 style="color: red">Sorry! Page not found</h3>
+{% endif %} 
+{% else %}
+<p style="color: red">Login first</p>
+{% endif %} {% endblock %}

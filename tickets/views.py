@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from tickets.models import Expert, Ticket
+from tickets.models import Expert, Ticket, Branches, Zones
 from feedback.models import Feedback
 from django.contrib import messages
 import time
+from datetime import datetime
 from .validate import validate_anydesk, validate_email, validate_phone, validate_name
-# Create your views here.
 
 
 def get_pending_tickets(tickets):
@@ -57,7 +57,8 @@ def index(request):
         "tickets_closed": tickets_closed
     }
     experts = Expert.objects.all()
-    return render(request, 'index.html', {"items": items, "experts": experts})
+    return render(
+        request, 'index.html', {"items": items, "experts": experts})
 
 
 @login_required
@@ -72,7 +73,10 @@ def services(request):
 
 @login_required
 def bookticket(request):
-    return render(request, 'bookticket.html')
+    branch_list = [item for item in Branches.objects.all().order_by('name')]
+    zone_list = [item for item in Zones.objects.all().order_by('name')]
+    return render(
+        request, 'bookticket.html', {'zone_list': zone_list, 'branch_list': branch_list})
 
 
 @login_required
@@ -123,6 +127,7 @@ def submit_ticket(request):
         issue = request.POST['issue']
         date = request.POST['date']
         username = request.user
+        date_submitted = datetime.today()
         submitter_name = request.user.get_full_name()
         phone = validate_phone(str(request.POST['phone']))
         if phone:
@@ -141,8 +146,7 @@ def submit_ticket(request):
         description = request.POST['description']
         image = request.POST['image']
         _time = time.strftime("%H:%M:%S")
-        ticket = Ticket(zone=zone, branch=branch, issue=issue, date=date,
-                        username=username, submitter_name=submitter_name, phone=phone, anydesk=anydesk, description=description, image=image, time=_time)
+        ticket = Ticket(zone=zone, branch=branch, issue=issue, date=date,              date_submitted=date_submitted,username=username, submitter_name=submitter_name, phone=phone, anydesk=anydesk, description=description, image=image, time=_time)
 
         ticket.save()
         return render(request, 'submit_ticket.html')

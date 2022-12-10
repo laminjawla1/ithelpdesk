@@ -1,15 +1,13 @@
-from datetime import date
-from random import choices
-from tokenize import blank_re
-from unicodedata import category
 from django.db import models
 
 # Create your models here.
 category_list = (
-    ('CPU', 'CPU'),
-    ('Monitor', 'Monitor'),
-    ('Peripheral', 'Peripheral'),
+    ('CPUs', 'CPUs'),
+    ('Monitors', 'Monitors'),
+    ('Peripherals', 'Peripherals'),
     ('Laptop', 'Laptop'),
+    ('Printers', 'Printers'),
+    ('Adapters', 'Adapters')
 )
 
 status_list = (
@@ -33,6 +31,7 @@ class Inventory(models.Model):
         max_length=50, blank=True, null=True, choices=status_list)
     user_name = models.CharField(max_length=50, blank=True, null=True)
     date = models.DateField(null=True, blank=True)
+    quantity = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.model

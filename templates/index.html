@@ -68,6 +68,9 @@
                                  <a class="nav-link" href="{% url 'about' %}">About</a>
                               </li>
                               <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'blog_home' %}">IT Newsfeed</a>
+                              </li>
+                              <li class="nav-item">
                                  <a class="nav-link" href="{% url 'services' %}">Services</a>
                               </li>
                               <li class="nav-item">
@@ -84,6 +87,9 @@
                               <li class="nav-item d_none">
                                  <a style="color: red" class="nav-link" href="{% url 'logout' %}">Logout</a>
                               </li>
+                              <li class="nav-item d_none">
+                                 <a style="color: red" class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+                              </li>
                               {% else %}
                               <li class="nav-item d_none">
                                  <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -91,7 +97,7 @@
                               {% endif %}
                               {% if user.is_staff %}
                               <li class="nav-item d_none">
-                                 <a class="nav-link" href="admin" target="_blank"><img src="{% static 'images/admin.png' %}" width='50' height='40' alt="#" /></a>
+                                 <a class="nav-link" href="admin" ><img src="{% static 'images/admin.png' %}" width='50' height='40' alt="#" /></a>
                               </li>
                               {% endif %}
                            </ul>

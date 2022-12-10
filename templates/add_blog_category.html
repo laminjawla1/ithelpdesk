@@ -1,0 +1,23 @@
+{% extends 'blog_base.html' %}
+{% block title %} Create a new category {%endblock %} 
+
+{% block content %}
+
+{% if user.is_staff %}
+<h1>Add Category</h1>
+
+<br/>
+<br/>
+<div class='form-group'>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.media}}
+        {{ form.as_p}}
+        <button class="btn btn-success">Create</button>
+    </form>
+</div>
+{% else %}
+<p style="color: red">Login first</p>
+{% endif %} 
+
+{% endblock %}

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
+# import django_heroku
 
 # from help_desk import version
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,19 +31,22 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 
-ALLOWED_HOSTS = ['yonnaforexbureauithelpdesk.herokuapp.com',
-                '127.0.0.1:8000',
-                '127.0.0.1'
-]
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['yonnaforexbureauithelpdesk.herokuapp.com',
+#                 '127.0.0.1:8000',
+#                 '127.0.0.1'
+# ]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     'accounts.apps.AccountsConfig',
     'inventory.apps.InventoryConfig',
     'tickets.apps.TicketsConfig',
     'feedback.apps.FeedbackConfig',
+    'blog.apps.BlogConfig',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,26 +92,21 @@ WSGI_APPLICATION = 'help_desk.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd4jke4pssajj08',
-        'USER': 'ztvdvongczcgiw',
-        'PASSWORD': '6d3d6d970553033241cfbde402cb618e6b898f89fa169ea8dc3f2b7cf3470158',
-        'HOST': 'ec2-44-199-9-102.compute-1.amazonaws.com'
-    }
-}
 # DATABASES = {
 #     'default': {
-#         # 'ENGINE': 'django.db.backends.postgresql',
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#         # 'NAME': 'it_help_desk',
-#         # 'USER': 'postgres',
-#         # 'PASSWORD': 'sage10',
-#         # 'HOST': 'localhost'
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd4jke4pssajj08',
+#         'USER': 'ztvdvongczcgiw',
+#         'PASSWORD': '6d3d6d970553033241cfbde402cb618e6b898f89fa169ea8dc3f2b7cf3470158',
+#         'HOST': 'ec2-44-199-9-102.compute-1.amazonaws.com'
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -148,14 +146,14 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = 'static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
@@ -165,4 +163,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SESSION_EXPIRE_SECONDS = 1200
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

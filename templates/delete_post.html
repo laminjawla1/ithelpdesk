@@ -1,0 +1,23 @@
+{% extends 'blog_base.html' %} {% block title %} Delete post {%endblock %}
+{%block content %} 
+
+{% if user.id == post.author.id %}
+<h1>Delete Post</h1>
+
+<br />
+<br />
+<h3 style="color: red">Delete: {{ post.title }}</h3>
+
+<div class="form-group">
+  <form method="POST">
+    {% csrf_token %}
+    <strong>Are you sure?</strong>
+    <br />
+    <button class="btn btn-danger">Delete Post</button>
+  </form>
+</div>
+{% else %}
+<p style="color: red">Access denied</p>
+{% endif %} 
+
+{% endblock %}

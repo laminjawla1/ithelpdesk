@@ -101,6 +101,9 @@
                       <a class="nav-link" href="{% url 'about' %}">About</a>
                     </li>
                     <li class="nav-item">
+                      <a class="nav-link" href="{% url 'blog_home' %}">IT Newsfeed</a>
+                    </li>
+                    <li class="nav-item">
                       <a class="nav-link" href="{% url 'services' %}"
                         >Service</a
                       >
@@ -172,15 +175,9 @@
                     id="zone" 
                     required>
                     <option value="" selected="selected" hidden="hidden">Select</option>
-                    <option value="Bansang" required>Bansang</option>
-                    <option value="Basse" required>Basse</option>
-                    <option value="Brikama" required>Brikama</option>
-                    <option value="Brusibi" required>Brusibi</option>
-                    <option value="Farafenni" required>Farafenni</option>
-                    <option value="Soma" required>Soma</option>
-                    <option value="Tippagarage" required>Tippagrage</option>
-                    <option value="Tabokoto" required>Tabokoto</option>
-                    <option value="Westfield" required>Westfield</option>
+                    {% for zone in zone_list %}
+                      <option value="{{ zone }}" required>{{ zone }}</option>
+                    {% endfor %}
                   </select>
                   <h3 style="color: white" id="branch">SELECT YOUR BRANCH <span style="color: red">*</span></h3>
                   <select
@@ -191,97 +188,9 @@
                     id="branch"
                     required>
                     <option value="" selected="selected" hidden="hidden">Select</option>
-                    <option value="Abuko" required>Abuko</option>
-                    <option value="Albreda" required>Albreda</option>
-                    <option value="Aljamdu" required>Aljamdu</option>
-                    <option value="Allunhari" required>Allunhari</option>
-                    <option value="Allunhari Abdou" required>Allunhari Abdou</option>
-                    <option value="Amdalai" required>Amdalai</option>
-                    <option value="Badarri" required>Badarri</option>
-                    <option value="Baja Kunda" required>Baja Kunda</option>
-                    <option value="Bakadaji" required>Bakadaji</option>
-                    <option value="Bakau" required>Bakau</option>
-                    <option value="Bakindick Mandinka" required>Bakindick Mandinka</option>
-                    <option value="Bambo" required>Bambo</option>
-                    <option value="Banjul" required>Banjul</option>
-                    <option value="Banjulunding" required>Banjulunding</option>
-                    <option value="Banni" required>Banni</option>
-                    <option value="Bansang" required>Bansang</option>
-                    <option value="Bantango Koto" required>Bantango Koto</option>
-                    <option value="Bantanto" required>Bantanto</option>
-                    <option value="Bantunding" required>Bantunding</option>
-                    <option value="Banyakang" required>Banyakang</option>
-                    <option value="Barajally" required>Barajally</option>
-                    <option value="Barrow Kunda" required>Barrow Kunda</option>
-                    <option value="Barry Nabeh" required>Barry Nabeh</option>
-                    <option value="Basse" required>Basse</option>
-                    <option value="Basse Nding" required>Basse Nding</option>
-                    <option value="Batokunku" required>Batokunku</option>
-                    <option value="Berefet" required>Berefet</option>
-                    <option value="Besang Dugu" required>Besang Dugu</option>
-                    <option value="Bohum Kunda" required>Bohum Kunda</option>
-                    <option value="Boro Dampha Kunda" required>Boro Dampha Kunda</option>
-                    <option value="Boro Kanda Kassy" required>Boro Kanda Kassy</option>
-                    <option value="Boro Modi Bane" required>Boro Modi Bane</option>
-                    <option value="Brifu" required>Brifu</option>
-                    <option value="Brikama" required>Brikama</option>
-                    <option value="Brikama Ba" required>Brikama Ba</option>
-                    <option value="Brufut" required>Brufut</option>
-                    <option value="Bulok" required>Bulok</option>
-                    <option value="Busumbala" required>Busumbala</option>
-                    <option value="Busura Alieu" required>Busura Alieu</option>
-                    <option value="Bwiam" required>Bwiam</option>
-                    <option value="Chamoi" required>Chamoi</option>
-                    <option value="Chamoi Bunda" required>Chamoi Bunda</option>
-                    <option value="Demba Kunda" required>Demba Kunda</option>
-                    <option value="Diabugu" required>Diabugu</option>
-                    <option value="Dumbutu" required>Dumbutu</option>
-                    <option value="Dobo" required>Dobo</option>
-                    <option value="Daru Rilwan" required>Daru Rilwan</option>
-                    <option value="Essau" required>Essau</option>
-                    <option value="Faraba Banta" required>Faraba Banta</option>
-                    <option value="Farafenni" required>Farafenni</option>
-                    <option value="Farato" required>Farato</option>
-                    <option value="Fatoto" required>Fatoto</option>
-                    <option value="Fattatenda" required>Fattatenda</option>
-                    <option value="Gambissara" required>Gambissara</option>
-                    <option value="Garowol" required>Garowol</option>
-                    <option value="Genieri" required>Genieri</option>
-                    <option value="Ghana Town" required>Ghana Town</option>
-                    <option value="Gimara" required>Gimara</option>
-                    <option value="Gunjur" required>Gunjur</option>
-                    <option value="Janjanbureh" required>Janjanbureh</option>
-                    <option value="Jufureh" required>Jufureh</option>
-                    <option value="Kaiai" required>Kaiai</option>
-                    <option value="Kiang" required>Kiang</option>
-                    <option value="Kanilai" required>Kanilai</option>
-                    <option value="Kartung" required>Kartung</option>
-                    <option value="Kalagi" required>Kalagi</option>
-                    <option value="Karantaba Tenda" required>Karantaba Tenda</option>
-                    <option value="Kuntaur" required>Kuntaur</option>
-                    <option value="Kalagi" required>Kalagi</option>
-                    <option value="Karantaba Tenda" required>Karantaba Tenda</option>
-                    <option value="Kerewan" required>Kerewan</option>
-                    <option value="Kololi" required>Kololi</option>
-                    <option value="Kuntaur" required>Kuntaur</option>
-                    <option value="Lamin" required>Lamin</option>
-                    <option value="Latrikunda" required>Latrikunda</option>
-                    <option value="Latrikunda German" required>Latrikunda German</option>
-                    <option value="Mansa Konko" required>Mansa Konko</option>
-                    <option value="Nema Kunku" required>Nema Kunku</option>
-                    <option value="Pakali Ba" required>Pakali Ba</option>
-                    <option value="Pakali Ding" required>Pakali Ding</option>
-                    <option value="Sankandi" required>Sankandi</option>
-                    <option value="Serekunda" required>Serekunda</option>
-                    <option value="Suduwol" required>Suduwol</option>
-                    <option value="Sutukoba" required>Sutukoba</option>
-                    <option value="Yundum" required>Yundum</option>
-                    <option value="Soma" required>Soma</option>
-                    <option value="Sukuta" required>Sukuta</option>
-                    <option value="Tabokoto" required>Tabokoto</option>
-                    <option value="Tanji" required>Tanji</option>
-                    <option value="Tallingding" required>Tallingding</option>
-                    <option value="Other" required>Other</option>
+                    {% for branch in branch_list %}
+                      <option value="{{ branch }}" required>{{ branch }}</option>
+                    {% endfor %}
                   </select>
                 </div>
                 <div class="col-md-12">
@@ -294,6 +203,7 @@
                     required>
                     <option value="" selected="selected" hidden="hidden">Select</option>
                     <option value="email">Email</option>
+                    <option value="authenticator">Authenticator</option>
                     <option value="password">Password</option>
                     <option value="activation">Activation</option>
                     <option value="Windows Won’t Boot">Windows Won’t Boot</option>

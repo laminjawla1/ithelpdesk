@@ -1,5 +1,6 @@
 from django.db import models
 import time
+import django
 
 # Create your models here.
 cycle_list = (
@@ -31,6 +32,23 @@ level_list = (
     ('Pro', 'Pro'),
 )
 
+class Zones(models.Model):
+    class Meta:
+        verbose_name_plural = "Zones"
+    name = models.CharField(max_length=256)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Branches(models.Model):
+    class Meta:
+        verbose_name_plural = "Branches"
+    name = models.CharField(max_length=256)
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class Specialization(models.Model):
     field = models.CharField(max_length=100)
@@ -61,16 +79,25 @@ class Expert(models.Model):
 
 
 class Ticket(models.Model):
-    zone = models.CharField(max_length=100)
-    branch = models.CharField(max_length=100)
+    branch_list = [
+        item for item in Branches.objects.all().values_list('name', 'name').order_by('name')
+    ]
+    zone_list = [
+        item for item in Zones.objects.all().values_list('name', 'name').order_by('name')
+    ]
+
+
+    zone = models.CharField(choices=zone_list, max_length=100)
+    branch = models.CharField(choices=branch_list, max_length=100)
     issue = models.CharField(max_length=100, blank=False, null=False)
     status = models.CharField(
         max_length=100, blank=True, choices=status_list, default=status_list[0][0])
     date = models.DateField(null=True)
+    date_submitted = models.DateTimeField(default=django.utils.timezone.now)
     username = models.CharField(max_length=100)
     submitter_name = models.CharField(max_length=120, blank=True, null=True)
     phone = models.CharField(max_length=12, blank=False, null=False)
-    image = models.FileField(
+    image = models.ImageField(
         upload_to='ticket_pics', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     anydesk = models.CharField(max_length=9, blank=True, null=True)

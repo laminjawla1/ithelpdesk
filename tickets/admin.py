@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, Expert, Specialization
+from .models import Ticket, Expert, Specialization, Branches, Zones
 from django.http import HttpResponse
 import csv
 
@@ -9,11 +9,11 @@ def export_tickets(modeladmin, request, queryset):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="tickets.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Full Name', 'User Name', 'Phone', 'Issue',
-                    'Category', 'Status', 'Cycle', 'Date', 'Time'])
+    writer.writerow(['Full Name', 'Branch', 'Phone', 'Issue',
+                    'Category', 'Status', 'Cycle', 'Date Submitted'])
     tickets = queryset.values_list(
-        'submitter_name', 'username', 'phone', 'issue',
-        'category', 'status', 'cycle', 'date', 'time')
+        'submitter_name', 'branch', 'phone', 'issue',
+        'category', 'status', 'cycle', 'date_submitted')
     for ticket in tickets:
         writer.writerow(ticket)
     return response
@@ -23,13 +23,13 @@ export_tickets.short_description = 'Export as csv'
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('submitter_name', 'username', 'phone', 'issue',
-                    'category', 'status', 'cycle', 'date', 'time')
-    ordering = ('submitter_name', 'username', 'phone', 'issue',
-                'category', 'status', 'cycle', 'date', 'time')
-    search_fields = ('submitter_name', 'username', 'phone', 'issue',
-                     'category', 'status', 'cycle', 'date', 'time')
-    list_filter = ['submitter_name', 'username', 'issue',
+    list_display = ('submitter_name', 'branch', 'phone', 'issue',
+                    'category', 'status', 'cycle', 'date_submitted')
+    ordering = ('submitter_name', 'branch', 'phone', 'issue',
+                'category', 'status', 'cycle', 'date_submitted')
+    search_fields = ('submitter_name', 'branch', 'phone', 'issue',
+                     'category', 'status', 'cycle', 'date_submitted')
+    list_filter = ['submitter_name', 'branch', 'issue',
                    'category', 'status', 'cycle', 'assigned_to', 'date']
 
     fieldsets = (
@@ -43,7 +43,7 @@ class PageAdmin(admin.ModelAdmin):
         }),
         ('Ticket Information', {
             'classes': ('collapse',),
-            'fields': ('category', 'cycle', 'status', 'image', 'date_closed', 'documentation')
+            'fields': ('category', 'cycle', 'status', 'image', 'date_submitted', 'date_closed', 'documentation')
         }),
         ('Ticket Admin', {
             'classes': ('collapse',),
@@ -64,7 +64,23 @@ class ExpertAdmin(admin.ModelAdmin):
                    'phone', 'email', 'specialization', 'level']
     sortable_by = ['name', 'specialization']
 
+class BranchAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    ordering = ('name',)
+    search_fields = ('name',)
+    list_filter = ['name']
+    sortable_by = ['name']
+
+class ZoneAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    ordering = ('name',)
+    search_fields = ('name',)
+    list_filter = ['name']
+    sortable_by = ['name']
+
 
 admin.site.register(Ticket, PageAdmin)
 admin.site.register(Expert, ExpertAdmin)
 admin.site.register(Specialization)
+admin.site.register(Zones, ZoneAdmin)
+admin.site.register(Branches, BranchAdmin)

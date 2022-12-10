@@ -1,0 +1,23 @@
+{% extends 'blog_base.html' %}
+{% block title %} Edit post {%endblock %} 
+
+{% block content %}
+
+{% if user.id == post.author.id %}
+<h1>Edit Post</h1>
+
+<br/>
+<br/>
+<div class='form-group'>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.media}}
+        {{ form.as_p}}
+        <button class="btn btn-success">Update</button>
+    </form>
+</div>
+{% else %}
+<p style="color: red">Access denied</p>
+{% endif %} 
+
+{% endblock %}

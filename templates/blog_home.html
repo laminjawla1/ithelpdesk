@@ -1,0 +1,26 @@
+{% extends 'blog_base.html' %}
+
+{% block content %}
+<h1 style="color: purple">Posts</h1>
+
+<ul>
+{% for post in object_list %}
+  <li>
+    <a href="{% url 'article_detail' post.pk %}">{{post.title|title}}</a> -
+    <a style="color: purple" href="{% url 'category' post.category|slugify %}">{{ post.category|title }}<a/> -
+    {{post.author.first_name}} {{post.author.last_name}}
+    {% if user.id == post.author.id %}
+    - 
+      <small>
+        <a style="color: green" href="{% url 'edit_post' post.pk %}">(Edit)</a>
+        <a style="color: red"href="{% url 'delete_post' post.pk %}">(Delete)</a>
+      </small>
+    {% endif %}
+    <br />
+    {{post.snippet}}
+  </li>
+  <br/>
+  {% endfor %}
+</ul>
+
+{% endblock %}
